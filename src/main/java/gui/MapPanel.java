@@ -25,11 +25,11 @@ public class MapPanel extends JPanel {
         BOTTOMRIGHT
     }
 
-    public MapPanel(Class painter){
+    MapPanel(Class painter){
         this.map = new RPMap();
 
         try {
-            Constructor<?> ctor = painter.getConstructor(RPMap.class);
+            @SuppressWarnings("unchecked") Constructor<?> ctor = painter.getConstructor(RPMap.class);
             this.painter = (MapPainter) ctor.newInstance(new Object[] { this.map });
         } catch (Exception e) {
             e.printStackTrace();
