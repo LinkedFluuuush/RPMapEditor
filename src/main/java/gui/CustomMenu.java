@@ -1,9 +1,6 @@
 package gui;
 
-import gui.actions.menuActions.ExportToImgAction;
-import gui.actions.menuActions.NewMapAction;
-import gui.actions.menuActions.OpenMapAction;
-import gui.actions.menuActions.SaveMapAction;
+import gui.actions.menuActions.*;
 
 import javax.print.DocFlavor;
 import javax.swing.*;
@@ -69,6 +66,7 @@ public class CustomMenu extends JMenuBar {
         this.exitItem = new JMenuItem("Quit");
         this.exitItem.setMnemonic('q');
         this.exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
+        this.exitItem.addActionListener(new QuitAction(this.basePanel));
 
         this.editMenu = new JMenu("Edit");
         this.editMenu.setMnemonic('e');
