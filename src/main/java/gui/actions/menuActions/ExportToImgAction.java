@@ -3,9 +3,12 @@ package gui.actions.menuActions;
 import core.RPMap;
 import core.util.Pair;
 import gui.BasePanel;
+import gui.MainFrame;
 import gui.painters.MapPainter;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,13 +41,71 @@ public class ExportToImgAction implements ActionListener {
 
         painter.paintMap(map, (mapSize.getP1() + 2)*30, (mapSize.getP2() + 2)*30, upLeftCorner.getP1() - 1, upLeftCorner.getP2() - 1, true, g);
 
-        File outputfile = new File("image.jpg");
-        try {
-            ImageIO.write(finalImage, "jpg", outputfile);
-        } catch (IOException e1) {
-            e1.printStackTrace();
+
+        final JFileChooser fc = new JFileChooser();
+        fc.setAcceptAllFileFilterUsed(false);
+        fc.addChoosableFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                if (f.isDirectory()) {
+                    return true;
+                }
+
+                String extension = f.getName().substring(f.getName().lastIndexOf('.') + 1).toLowerCase();
+                if (extension != null) {
+                    if (extension.equals("tiff") ||
+                            extension.equals("tif") ||
+                            extension.equals("gif") ||
+                            extension.equals("jpeg") ||
+                            extension.equals("jpg") ||
+                            extension.equals("png")) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            @Override
+            public String getDescription() {
+                return "Image types only";
+            }
+        });
+
+        Container frame = basePanel.getParent();
+        while(frame.getClass() != MainFrame.class){
+            frame = frame.getParent();
         }
 
+        File file = null;
+        int fileSelectionResult;
+        String extension = "";
+        boolean again;
 
+        do {
+            again = false;
+            fileSelectionResult = fc.showDialog(frame, "Export image");
+            if (fileSelectionResult == JFileChooser.APPROVE_OPTION) {
+                file = fc.getSelectedFile();
+                extension = file.getName().substring(file.getName().lastIndexOf('.') + 1).toLowerCase();
+                if(!(extension.equals("tiff") ||
+                        extension.equals("tif") ||
+                        extension.equals("gif") ||
+                        extension.equals("jpeg") ||
+                        extension.equals("jpg") ||
+                        extension.equals("png"))){
+                    JOptionPane.showMessageDialog(null, "Please select an image format between TIFF, TIF, GIF, JPEG, JPG or PNG.", "Error", JOptionPane.ERROR_MESSAGE);
+                    again = true;
+                }
+            }
+        } while(again);
+
+        if(file != null) {
+            try {
+                ImageIO.write(finalImage, extension, file);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
     }
 }
