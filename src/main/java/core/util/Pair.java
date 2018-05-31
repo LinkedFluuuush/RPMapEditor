@@ -52,6 +52,7 @@ public class Pair<T> {
                 '}';
     }
 
+    @SuppressWarnings("unused")
     @JsonValue
     public String toJson(){
         return this.getP1()+"-"+this.getP2();

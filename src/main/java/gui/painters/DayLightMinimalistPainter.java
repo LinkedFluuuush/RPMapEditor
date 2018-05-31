@@ -17,12 +17,11 @@ import static core.Tile.TileType.SMALLDIRT;
 import static core.Tile.TileType.TREE;
 
 public class DayLightMinimalistPainter extends MapPainter {
-    private HashMap<Pair<Integer>, List<Pair<Pair<Integer>>>> treeMap;
-    private HashMap<Pair<Integer>, List<Pair<Pair<Integer>>>> bigDirtMap;
-    private HashMap<Pair<Integer>, List<Pair<Pair<Integer>>>> smallDirtMap;
+    private final HashMap<Pair<Integer>, List<Pair<Pair<Integer>>>> treeMap;
+    private final HashMap<Pair<Integer>, List<Pair<Pair<Integer>>>> bigDirtMap;
+    private final HashMap<Pair<Integer>, List<Pair<Pair<Integer>>>> smallDirtMap;
 
     private int drawingOffsetX, drawingOffsetY;
-    private boolean drawBackground;
 
     public DayLightMinimalistPainter(RPMap map){
         super(map);
@@ -34,7 +33,7 @@ public class DayLightMinimalistPainter extends MapPainter {
 
 
     private Tile getTileAt(int i, int j){
-        return this.getMap().getMapTiles().get(new Pair(i, j));
+        return this.getMap().getMapTiles().get(new Pair<>(i, j));
     }
 
     private boolean isFullCorner(int i, int j, MapPanel.Corner corner){
@@ -249,10 +248,10 @@ public class DayLightMinimalistPainter extends MapPainter {
 
     public void drawBigDirt(int i, int j, Graphics g){
         Color original = g.getColor();
-        java.util.List<Pair<Pair<Integer>>> bigDirtList = new ArrayList();
+        java.util.List<Pair<Pair<Integer>>> bigDirtList = new ArrayList<>();
         Random r = new Random();
 
-        if(bigDirtMap.get(new Pair<Integer>(i, j)) == null) {
+        if(bigDirtMap.get(new Pair<>(i, j)) == null) {
             int nDirt = 5 + r.nextInt(10);
 
             for (int n = 0; n < nDirt; n++) {
@@ -260,12 +259,12 @@ public class DayLightMinimalistPainter extends MapPainter {
                 int dirtXOffset = r.nextInt(40 - dirtSize) - 5;
                 int dirtYOffset = r.nextInt(40 - dirtSize) - 5;
 
-                bigDirtList.add(new Pair<Pair<Integer>>(new Pair<Integer>(dirtXOffset, dirtYOffset),
-                        new Pair<Integer>(dirtSize, dirtSize)));
+                bigDirtList.add(new Pair<>(new Pair<>(dirtXOffset, dirtYOffset),
+                        new Pair<>(dirtSize, dirtSize)));
             }
-            bigDirtMap.put(new Pair<Integer>(i, j), bigDirtList);
+            bigDirtMap.put(new Pair<>(i, j), bigDirtList);
         } else {
-            bigDirtList = bigDirtMap.get(new Pair<Integer>(i, j));
+            bigDirtList = bigDirtMap.get(new Pair<>(i, j));
         }
 
         for(Pair<Pair<Integer>> aBigDirt : bigDirtList){
@@ -286,7 +285,7 @@ public class DayLightMinimalistPainter extends MapPainter {
         Graphics2D g2d = (Graphics2D) g;
         Random r = new Random();
 
-        if(smallDirtMap.get(new Pair<Integer>(i, j)) == null) {
+        if(smallDirtMap.get(new Pair<>(i, j)) == null) {
             int nDirt = 5 + r.nextInt(10);
 
             for (int n = 0; n < nDirt; n++) {
@@ -294,13 +293,13 @@ public class DayLightMinimalistPainter extends MapPainter {
                 int dirtXOffset = r.nextInt(30 - dirtSize);
                 int dirtYOffset = r.nextInt(30 - dirtSize);
 
-                smallDirtList.add(new Pair<Pair<Integer>>(new Pair<Integer>(dirtXOffset, dirtYOffset),
-                        new Pair<Integer>(dirtSize, dirtSize)));
+                smallDirtList.add(new Pair<>(new Pair<>(dirtXOffset, dirtYOffset),
+                        new Pair<>(dirtSize, dirtSize)));
             }
 
-            smallDirtMap.put(new Pair<Integer>(i, j), smallDirtList);
+            smallDirtMap.put(new Pair<>(i, j), smallDirtList);
         } else {
-            smallDirtList = smallDirtMap.get(new Pair<Integer>(i, j));
+            smallDirtList = smallDirtMap.get(new Pair<>(i, j));
         }
 
         for (Pair<Pair<Integer>> aSmallDirt : smallDirtList){
@@ -560,15 +559,15 @@ public class DayLightMinimalistPainter extends MapPainter {
                     }
 
                     if(tile.getType() != TREE){
-                        treeMap.remove(new Pair(i,j));
+                        treeMap.remove(new Pair<>(i,j));
                     }
 
                     if(tile.getType() != SMALLDIRT){
-                        smallDirtMap.remove(new Pair<Integer>(i, j));
+                        smallDirtMap.remove(new Pair<>(i, j));
                     }
 
                     if(tile.getType() != BIGDIRT){
-                        bigDirtMap.remove(new Pair<Integer>(i, j));
+                        bigDirtMap.remove(new Pair<>(i, j));
                     }
                 }
             }

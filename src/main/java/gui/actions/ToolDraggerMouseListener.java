@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
 public class ToolDraggerMouseListener implements MouseMotionListener {
-    private ToolPanel toolPanel;
+    private final ToolPanel toolPanel;
 
     public ToolDraggerMouseListener(ToolPanel toolPanel){
         this.toolPanel = toolPanel;

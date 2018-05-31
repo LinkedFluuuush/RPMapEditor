@@ -14,8 +14,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class SaveMapAction implements ActionListener {
-    private boolean saveAs;
-    private BasePanel basePanel;
+    private final boolean saveAs;
+    private final BasePanel basePanel;
 
     public SaveMapAction(BasePanel basePanel, boolean saveAs) {
         this.basePanel = basePanel;
@@ -58,13 +58,7 @@ public class SaveMapAction implements ActionListener {
                     }
 
                     String extension = f.getName().substring(f.getName().lastIndexOf('.') + 1).toLowerCase();
-                    if (extension != null) {
-                        if (extension.equals("rpmap")) {
-                            return true;
-                        }
-                    }
-
-                    return false;
+                    return extension.equals("rpmap");
                 }
 
                 @Override

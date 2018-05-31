@@ -1,6 +1,5 @@
 package gui;
 
-import core.RPMap;
 import gui.actions.menuActions.QuitAction;
 
 import javax.swing.*;
@@ -11,7 +10,7 @@ import java.awt.event.WindowListener;
 
 public class MainFrame extends JFrame {
     public static void main(String[] args){
-        MainFrame frame = new MainFrame("Untitled (*) - RP Map Editor");
+        new MainFrame("Untitled (*) - RP Map Editor");
     }
 
     public MainFrame(String title) throws HeadlessException {

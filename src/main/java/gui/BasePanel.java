@@ -6,8 +6,8 @@ import javax.swing.*;
 import java.io.File;
 
 public class BasePanel extends JLayeredPane {
-    private ToolPanel toolPanel;
-    private MapPanel mapPanel;
+    private final ToolPanel toolPanel;
+    private final MapPanel mapPanel;
 
     private File savingFile;
     private boolean saved;

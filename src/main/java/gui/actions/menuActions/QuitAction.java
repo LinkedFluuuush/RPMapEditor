@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class QuitAction implements ActionListener {
-    private BasePanel basePanel;
+    private final BasePanel basePanel;
 
     public QuitAction (BasePanel basePanel){
         this.basePanel = basePanel;

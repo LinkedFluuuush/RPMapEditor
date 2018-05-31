@@ -3,13 +3,12 @@ package gui.actions.menuActions;
 import core.RPMap;
 import gui.BasePanel;
 import gui.MapPanel;
-import gui.ToolPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class NewMapAction implements ActionListener {
-    private BasePanel basePanel;
+    private final BasePanel basePanel;
 
     public NewMapAction (BasePanel basePanel){
         this.basePanel = basePanel;

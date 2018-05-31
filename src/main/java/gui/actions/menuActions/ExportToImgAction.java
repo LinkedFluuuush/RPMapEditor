@@ -17,7 +17,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class ExportToImgAction implements ActionListener {
-    private BasePanel basePanel;
+    private final BasePanel basePanel;
 
     public ExportToImgAction(BasePanel basePanel){
         this.basePanel = basePanel;
@@ -69,18 +69,12 @@ public class ExportToImgAction implements ActionListener {
                 }
 
                 String extension = f.getName().substring(f.getName().lastIndexOf('.') + 1).toLowerCase();
-                if (extension != null) {
-                    if (extension.equals("tiff") ||
-                            extension.equals("tif") ||
-                            extension.equals("gif") ||
-                            extension.equals("jpeg") ||
-                            extension.equals("jpg") ||
-                            extension.equals("png")) {
-                        return true;
-                    }
-                }
-
-                return false;
+                return extension.equals("tiff") ||
+                    extension.equals("tif") ||
+                    extension.equals("gif") ||
+                    extension.equals("jpeg") ||
+                    extension.equals("jpg") ||
+                    extension.equals("png");
             }
 
             @Override

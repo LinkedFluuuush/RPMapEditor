@@ -5,6 +5,7 @@ import core.Tile;
 
 import java.awt.*;
 
+@SuppressWarnings("unused")
 public abstract class MapPainter {
     private RPMap map;
 

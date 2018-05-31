@@ -1,6 +1,5 @@
 package gui.actions.menuActions;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -19,7 +18,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class OpenMapAction implements ActionListener {
-    private BasePanel basePanel;
+    private final BasePanel basePanel;
 
     public OpenMapAction(BasePanel basePanel){
         this.basePanel = basePanel;
@@ -39,13 +38,7 @@ public class OpenMapAction implements ActionListener {
                 }
 
                 String extension = f.getName().substring(f.getName().lastIndexOf('.') + 1).toLowerCase();
-                if (extension != null) {
-                    if (extension.equals("rpmap")) {
-                        return true;
-                    }
-                }
-
-                return false;
+                return extension.equals("rpmap");
             }
 
             @Override

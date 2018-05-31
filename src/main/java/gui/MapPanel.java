@@ -6,16 +6,10 @@ import core.util.Pair;
 import gui.actions.MapMouseListener;
 import gui.painters.DayLightMinimalistPainter;
 import gui.painters.MapPainter;
-import org.omg.PortableInterceptor.INACTIVE;
 
 import javax.swing.*;
 import java.awt.*;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
 
 import static core.Tile.TileOrientation.TOP;
 import static core.Tile.TileType.*;
@@ -63,6 +57,7 @@ public class MapPanel extends JPanel {
         return painter;
     }
 
+    @SuppressWarnings("unused")
     public void setPainter(MapPainter painter) {
         this.painter = painter;
     }
@@ -79,8 +74,8 @@ public class MapPanel extends JPanel {
         g.setColor(original);
     }
 
-    public Tile getTileAt(int i, int j){
-        return this.getMap().getMapTiles().get(new Pair(i, j));
+    private Tile getTileAt(int i, int j){
+        return this.getMap().getMapTiles().get(new Pair<>(i, j));
     }
 
     public void addTileAt(int x, int y){

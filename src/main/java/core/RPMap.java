@@ -1,12 +1,11 @@
 package core;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import core.util.Pair;
 
 import java.util.*;
 
 public class RPMap {
-    private Map<Pair<Integer>, Tile> mapTiles;
+    private final Map<Pair<Integer>, Tile> mapTiles;
 
     public RPMap(Map<Pair<Integer>, Tile> mapTiles) {
         this.mapTiles = mapTiles;
@@ -30,18 +29,13 @@ public class RPMap {
         this.mapTiles = new HashMap<>();
     }
 
-    public RPMap setTile(int p1, int p2, Tile tile){
+    public void setTile(int p1, int p2, Tile tile){
         mapTiles.put(new Pair<>(p1, p2), tile);
 
-        return this;
     }
 
     public Map<Pair<Integer>, Tile> getMapTiles() {
         return mapTiles;
-    }
-
-    public void setMapTiles(Map<Pair<Integer>, Tile> mapTiles) {
-        this.mapTiles = mapTiles;
     }
 
     public Pair<Integer> getUpLeftCorner(){

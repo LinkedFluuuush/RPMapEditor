@@ -8,8 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ChangeOrientationAction implements ActionListener {
-    private ToolPanel toolPanel;
-    private JButton triggeringButton;
+    private final ToolPanel toolPanel;
+    private final JButton triggeringButton;
     public ChangeOrientationAction(JButton triggeringButton, ToolPanel toolPanel) {
         super();
         this.triggeringButton = triggeringButton;

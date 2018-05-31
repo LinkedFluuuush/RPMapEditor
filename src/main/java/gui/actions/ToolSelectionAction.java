@@ -9,9 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ToolSelectionAction implements ActionListener {
-    private Tile.TileType typeSelection;
-    private ToolPanel toolPanel;
-    private JButton triggeringButton;
+    private final Tile.TileType typeSelection;
+    private final ToolPanel toolPanel;
+    private final JButton triggeringButton;
 
     public ToolSelectionAction(JButton triggeringButton, ToolPanel toolPanel, Tile.TileType typeSelection) {
         super();

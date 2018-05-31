@@ -7,24 +7,10 @@ import gui.actions.ToolSelectionAction;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 
 public class ToolPanel extends JPanel {
     private Tile.TileType selectedTool;
     private Tile.TileOrientation toolOrientation;
-
-    private JButton roomButton;
-    private JButton doorButton;
-    private JButton smallDirtButton;
-    private JButton bigDirtButton;
-    private JButton treeButton;
-    private JButton waterButton;
-    private JButton blurButton;
-    private JButton windowButton;
-    private JButton stairButton;
-
-    private JButton orientationButton;
 
     public ToolPanel() {
         this.setSelectedTool(Tile.TileType.EMPTY);
@@ -32,66 +18,66 @@ public class ToolPanel extends JPanel {
 
         this.setLayout(new GridLayout(13,1, 2, 2));
 
-        this.roomButton = new JButton("Room / Walls");
-        this.roomButton.setPreferredSize(new Dimension(120,20));
-        this.roomButton.addActionListener(new ToolSelectionAction(this.roomButton, this, Tile.TileType.EMPTY));
+        JButton roomButton = new JButton("Room / Walls");
+        roomButton.setPreferredSize(new Dimension(120,20));
+        roomButton.addActionListener(new ToolSelectionAction(roomButton, this, Tile.TileType.EMPTY));
 
         // Default selected button
-        this.roomButton.setEnabled(false);
+        roomButton.setEnabled(false);
 
-        this.doorButton = new JButton("Doors");
-        this.doorButton.setPreferredSize(new Dimension(120,20));
-        this.doorButton.addActionListener(new ToolSelectionAction(this.doorButton, this, Tile.TileType.DOOR));
+        JButton doorButton = new JButton("Doors");
+        doorButton.setPreferredSize(new Dimension(120,20));
+        doorButton.addActionListener(new ToolSelectionAction(doorButton, this, Tile.TileType.DOOR));
 
-        this.smallDirtButton = new JButton("Small dirt");
-        this.smallDirtButton.setPreferredSize(new Dimension(120,20));
-        this.smallDirtButton.addActionListener(new ToolSelectionAction(this.smallDirtButton, this, Tile.TileType.SMALLDIRT));
+        JButton smallDirtButton = new JButton("Small dirt");
+        smallDirtButton.setPreferredSize(new Dimension(120,20));
+        smallDirtButton.addActionListener(new ToolSelectionAction(smallDirtButton, this, Tile.TileType.SMALLDIRT));
 
-        this.bigDirtButton = new JButton("Big dirt");
-        this.bigDirtButton.setPreferredSize(new Dimension(120,20));
-        this.bigDirtButton.addActionListener(new ToolSelectionAction(this.bigDirtButton, this, Tile.TileType.BIGDIRT));
+        JButton bigDirtButton = new JButton("Big dirt");
+        bigDirtButton.setPreferredSize(new Dimension(120,20));
+        bigDirtButton.addActionListener(new ToolSelectionAction(bigDirtButton, this, Tile.TileType.BIGDIRT));
 
-        this.treeButton = new JButton("Tree");
-        this.treeButton.setPreferredSize(new Dimension(120,20));
-        this.treeButton.addActionListener(new ToolSelectionAction(this.treeButton, this, Tile.TileType.TREE));
+        JButton treeButton = new JButton("Tree");
+        treeButton.setPreferredSize(new Dimension(120,20));
+        treeButton.addActionListener(new ToolSelectionAction(treeButton, this, Tile.TileType.TREE));
 
-        this.waterButton = new JButton("Water");
-        this.waterButton.setPreferredSize(new Dimension(120,20));
-        this.waterButton.addActionListener(new ToolSelectionAction(this.waterButton, this, Tile.TileType.WATER));
+        JButton waterButton = new JButton("Water");
+        waterButton.setPreferredSize(new Dimension(120,20));
+        waterButton.addActionListener(new ToolSelectionAction(waterButton, this, Tile.TileType.WATER));
 
-        this.blurButton = new JButton("Blur");
-        this.blurButton.setPreferredSize(new Dimension(120,20));
-        this.blurButton.addActionListener(new ToolSelectionAction(this.blurButton, this, Tile.TileType.BLUR));
+        JButton blurButton = new JButton("Blur");
+        blurButton.setPreferredSize(new Dimension(120,20));
+        blurButton.addActionListener(new ToolSelectionAction(blurButton, this, Tile.TileType.BLUR));
 
-        this.windowButton = new JButton("Windows");
-        this.windowButton.setPreferredSize(new Dimension(120,20));
-        this.windowButton.addActionListener(new ToolSelectionAction(this.windowButton, this, Tile.TileType.WINDOW));
+        JButton windowButton = new JButton("Windows");
+        windowButton.setPreferredSize(new Dimension(120,20));
+        windowButton.addActionListener(new ToolSelectionAction(windowButton, this, Tile.TileType.WINDOW));
 
-        this.stairButton = new JButton("Stairs");
-        this.stairButton.setPreferredSize(new Dimension(120,20));
-        this.stairButton.addActionListener(new ToolSelectionAction(this.stairButton, this, Tile.TileType.STAIR));
+        JButton stairButton = new JButton("Stairs");
+        stairButton.setPreferredSize(new Dimension(120,20));
+        stairButton.addActionListener(new ToolSelectionAction(stairButton, this, Tile.TileType.STAIR));
 
-        this.orientationButton = new JButton("UP");
-        this.orientationButton.setPreferredSize(new Dimension(50, 20));
-        this.orientationButton.addActionListener(new ChangeOrientationAction(this.orientationButton, this));
+        JButton orientationButton = new JButton("UP");
+        orientationButton.setPreferredSize(new Dimension(50, 20));
+        orientationButton.addActionListener(new ChangeOrientationAction(orientationButton, this));
 
         JLabel toolsLabel = new JLabel("Tools");
         toolsLabel.setHorizontalAlignment(SwingConstants.CENTER);
         toolsLabel.addMouseMotionListener(new ToolDraggerMouseListener(this));
 
         this.add(toolsLabel);
-        this.add(this.roomButton);
+        this.add(roomButton);
         this.add(new JLabel("Objects"));
-        this.add(this.doorButton);
-        this.add(this.windowButton);
-        this.add(this.stairButton);
-        this.add(this.smallDirtButton);
-        this.add(this.bigDirtButton);
-        this.add(this.treeButton);
-        this.add(this.waterButton);
-        this.add(this.blurButton);
+        this.add(doorButton);
+        this.add(windowButton);
+        this.add(stairButton);
+        this.add(smallDirtButton);
+        this.add(bigDirtButton);
+        this.add(treeButton);
+        this.add(waterButton);
+        this.add(blurButton);
         this.add(new JLabel("Orientation"));
-        this.add(this.orientationButton);
+        this.add(orientationButton);
 
         this.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
         this.setBackground(Color.WHITE);

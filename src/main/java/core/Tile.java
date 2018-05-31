@@ -1,9 +1,9 @@
 package core;
 
 public class Tile {
-    private TileType type;
-    private TileOrientation orientation;
-    private boolean isRoom;
+    private final TileType type;
+    private final TileOrientation orientation;
+    private final boolean isRoom;
 
     public enum TileType{
         EMPTY,
@@ -29,31 +29,16 @@ public class Tile {
         this.isRoom = isRoom;
     }
 
-    public Tile() {
-        this (TileType.EMPTY, TileOrientation.TOP, false);
-    }
-
     public TileType getType() {
         return type;
-    }
-
-    public void setType(TileType type) {
-        this.type = type;
     }
 
     public TileOrientation getOrientation() {
         return orientation;
     }
 
-    public void setOrientation(TileOrientation orientation) {
-        this.orientation = orientation;
-    }
-
     public boolean isRoom() {
         return isRoom;
     }
 
-    public void setRoom(boolean room) {
-        isRoom = room;
-    }
 }

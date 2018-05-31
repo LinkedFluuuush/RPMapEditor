@@ -1,11 +1,9 @@
 package gui.actions;
 
-import core.Tile;
 import core.util.Pair;
 import gui.BasePanel;
 import gui.MainFrame;
 import gui.MapPanel;
-import gui.ToolPanel;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -14,13 +12,10 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static core.Tile.TileOrientation.TOP;
-import static core.Tile.TileType.EMPTY;
-
 public class MapMouseListener implements MouseListener, MouseMotionListener {
-    private MapPanel mapPanel;
+    private final MapPanel mapPanel;
 
-    private List<Pair<Integer>> positionList;
+    private final List<Pair<Integer>> positionList;
 
     public MapMouseListener(MapPanel mapPanel) {
         this.mapPanel = mapPanel;
@@ -60,7 +55,7 @@ public class MapMouseListener implements MouseListener, MouseMotionListener {
         x = (int) Math.floor(e.getX() / 30);
         y = (int) Math.floor(e.getY() / 30);
 
-        if(!positionList.contains(new Pair(x, y))) {
+        if(!positionList.contains(new Pair<>(x, y))) {
             positionList.add(new Pair<>(x, y));
             this.mapPanel.addTileAt(x, y);
         }
