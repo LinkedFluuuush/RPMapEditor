@@ -26,11 +26,10 @@ public class ExportToImgAction implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         RPMap map = basePanel.getMapPanel().getMap();
+        map.cleanMap();
 
         Pair<Integer> upLeftCorner = map.getUpLeftCorner();
         Pair<Integer> mapSize = map.getMapSize();
-
-        System.out.println(mapSize);
 
         BufferedImage finalImage = new BufferedImage((mapSize.getP1() + 2)*30, (mapSize.getP2() + 2)*30,
                 BufferedImage.TYPE_INT_RGB);
@@ -42,7 +41,25 @@ public class ExportToImgAction implements ActionListener {
         painter.paintMap(map, (mapSize.getP1() + 2)*30, (mapSize.getP2() + 2)*30, upLeftCorner.getP1() - 1, upLeftCorner.getP2() - 1, true, g);
 
 
-        final JFileChooser fc = new JFileChooser();
+        final JFileChooser fc = new JFileChooser(){
+            @Override
+            public void approveSelection()
+            {
+                if (getSelectedFile().exists())
+                {
+                    int n = JOptionPane.showConfirmDialog(
+                            this,
+                            "Do you want to overwrite this file?",
+                            "Confirm Overwrite",
+                            JOptionPane.YES_NO_OPTION);
+
+                    if (n == JOptionPane.YES_OPTION)
+                        super.approveSelection();
+                }
+                else
+                    super.approveSelection();
+            }
+        };
         fc.setAcceptAllFileFilterUsed(false);
         fc.addChoosableFileFilter(new FileFilter() {
             @Override

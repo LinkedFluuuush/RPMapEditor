@@ -3,9 +3,11 @@ package gui.actions;
 import core.Tile;
 import core.util.Pair;
 import gui.BasePanel;
+import gui.MainFrame;
 import gui.MapPanel;
 import gui.ToolPanel;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -61,6 +63,18 @@ public class MapMouseListener implements MouseListener, MouseMotionListener {
         if(!positionList.contains(new Pair(x, y))) {
             positionList.add(new Pair<>(x, y));
             this.mapPanel.addTileAt(x, y);
+        }
+
+        BasePanel basePanel = (BasePanel) mapPanel.getParent();
+        if(basePanel.isSaved()) {
+            basePanel.setSaved(false);
+            Container ctr = basePanel.getParent();
+            while (ctr.getClass() != MainFrame.class) {
+                ctr = ctr.getParent();
+            }
+            MainFrame frame = (MainFrame) ctr;
+
+            frame.setTitle(basePanel.getSavingFile().getName().substring(0, basePanel.getSavingFile().getName().lastIndexOf('.')) + " (*) - RP Map Editor");
         }
     }
 

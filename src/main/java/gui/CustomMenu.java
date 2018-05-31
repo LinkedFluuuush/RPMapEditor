@@ -2,6 +2,8 @@ package gui;
 
 import gui.actions.menuActions.ExportToImgAction;
 import gui.actions.menuActions.NewMapAction;
+import gui.actions.menuActions.OpenMapAction;
+import gui.actions.menuActions.SaveMapAction;
 
 import javax.print.DocFlavor;
 import javax.swing.*;
@@ -46,15 +48,18 @@ public class CustomMenu extends JMenuBar {
         this.openFileItem = new JMenuItem("Open map file");
         this.openFileItem.setMnemonic('o');
         this.openFileItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK));
+        this.openFileItem.addActionListener(new OpenMapAction(this.basePanel));
 
         this.saveFileItem = new JMenuItem("Save map");
         this.saveFileItem.setMnemonic('s');
         this.saveFileItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
+        this.saveFileItem.addActionListener(new SaveMapAction(this.basePanel, false));
 
         this.saveFileAsItem = new JMenuItem("Save map as...");
         this.saveFileAsItem.setMnemonic('a');
         this.saveFileAsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
                 InputEvent.CTRL_DOWN_MASK + InputEvent.SHIFT_DOWN_MASK));
+        this.saveFileAsItem.addActionListener(new SaveMapAction(this.basePanel, true));
 
         this.exportFileItem = new JMenuItem("Export map as image");
         this.exportFileItem.setMnemonic('e');

@@ -1,5 +1,7 @@
 package core.util;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.util.Objects;
 
 public class Pair<T> {
@@ -48,5 +50,10 @@ public class Pair<T> {
                 "p1=" + this.getP1() +
                 ", p2=" + this.getP2() +
                 '}';
+    }
+
+    @JsonValue
+    public String toJson(){
+        return this.getP1()+"-"+this.getP2();
     }
 }

@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class MainFrame extends JFrame {
     public static void main(String[] args){
-        MainFrame frame = new MainFrame("Untitled - RP Map Editor");
+        MainFrame frame = new MainFrame("Untitled (*) - RP Map Editor");
     }
 
     public MainFrame(String title) throws HeadlessException {

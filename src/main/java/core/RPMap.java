@@ -1,5 +1,6 @@
 package core;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import core.util.Pair;
 
 import java.util.*;
@@ -103,5 +104,23 @@ public class RPMap {
         }
 
         return corner;
+    }
+
+    public void cleanMap(){
+        Tile tile;
+        Set<Pair<Integer>> allTileKeys = this.getMapTiles().keySet();
+        List<Pair<Integer>> removingTiles = new ArrayList<>();
+
+        for(Pair<Integer> key : allTileKeys){
+            tile = this.getMapTiles().get(key);
+
+            if(!tile.isRoom() && tile.getType() == Tile.TileType.EMPTY){
+                removingTiles.add(key);
+            }
+        }
+
+        for(Pair<Integer> key : removingTiles){
+            this.getMapTiles().remove(key);
+        }
     }
 }
