@@ -3,11 +3,11 @@ package core.util;
 import java.util.Objects;
 
 public class Pair<T> {
-    T p1, p2;
+    private T p1, p2;
 
     public Pair(T p1, T p2){
-        this.p1 = p1;
-        this.p2 = p2;
+        this.setP1(p1);
+        this.setP2(p2);
     }
 
     public T getP1() {
@@ -40,5 +40,13 @@ public class Pair<T> {
 
     public void setP2(T p2) {
         this.p2 = p2;
+    }
+
+    @Override
+    public String toString() {
+        return "Pair{" +
+                "p1=" + this.getP1() +
+                ", p2=" + this.getP2() +
+                '}';
     }
 }

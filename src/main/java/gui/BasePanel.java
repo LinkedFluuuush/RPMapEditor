@@ -1,5 +1,7 @@
 package gui;
 
+import gui.painters.DayLightMinimalistPainter;
+
 import javax.swing.*;
 
 public class BasePanel extends JLayeredPane {
@@ -12,7 +14,7 @@ public class BasePanel extends JLayeredPane {
         this.toolPanel = new ToolPanel();
         this.toolPanel.setBounds(20, 20, 120, 260);
 
-        this.mapPanel = new MapPanel();
+        this.mapPanel = new MapPanel(DayLightMinimalistPainter.class);
 
 
         this.add(mapPanel, new Integer(0));

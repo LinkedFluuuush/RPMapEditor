@@ -51,13 +51,13 @@ public class RPMap {
 
             for(Pair<Integer> aCoord : tileCoords){
                 if(corner == null){
-                    corner = aCoord;
+                    corner = new Pair<>(aCoord.getP1(), aCoord.getP2());
                 } else {
-                    if (aCoord.getP1() <= corner.getP1()){
+                    if (aCoord.getP1() < corner.getP1()){
                         corner.setP1(aCoord.getP1());
                     }
 
-                    if (aCoord.getP2() <= corner.getP2()){
+                    if (aCoord.getP2() < corner.getP2()){
                         corner.setP2(aCoord.getP2());
                     }
                 }
@@ -69,13 +69,13 @@ public class RPMap {
 
     public Pair<Integer> getMapSize() {
         Pair<Integer> mapSize = new Pair<>(0, 0);
+        Pair<Integer> upLeftCorner = this.getUpLeftCorner();
 
-        if(this.getUpLeftCorner() != null){
-            Pair<Integer> upLeftCorner = this.getUpLeftCorner();
+        if(upLeftCorner != null){
             Pair<Integer> downRightCorner = this.getDownRightCorner();
 
-            mapSize.setP1(downRightCorner.getP1() - upLeftCorner.getP1());
-            mapSize.setP2(downRightCorner.getP2() - upLeftCorner.getP2());
+            mapSize.setP1(downRightCorner.getP1() - upLeftCorner.getP1() + 1);
+            mapSize.setP2(downRightCorner.getP2() - upLeftCorner.getP2() + 1);
         }
 
         return mapSize;
@@ -89,13 +89,13 @@ public class RPMap {
 
             for(Pair<Integer> aCoord : tileCoords){
                 if(corner == null){
-                    corner = aCoord;
+                    corner = new Pair<>(aCoord.getP1(), aCoord.getP2());
                 } else {
-                    if (aCoord.getP1() >= corner.getP1()){
+                    if (aCoord.getP1() > corner.getP1()){
                         corner.setP1(aCoord.getP1());
                     }
 
-                    if (aCoord.getP2() >= corner.getP2()){
+                    if (aCoord.getP2() > corner.getP2()){
                         corner.setP2(aCoord.getP2());
                     }
                 }
