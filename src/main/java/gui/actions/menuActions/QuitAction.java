@@ -25,12 +25,14 @@ public class QuitAction implements ActionListener {
 
         MainFrame frame = (MainFrame) ctr;
 
+        int n = JOptionPane.YES_OPTION;
+
         if(!this.basePanel.isSaved()){
-            int n = JOptionPane.showConfirmDialog(
+            n = JOptionPane.showConfirmDialog(
                     frame,
                     "Your map isn't saved. Do you want to save it ?",
                     "Save file ?",
-                    JOptionPane.YES_NO_OPTION);
+                    JOptionPane.YES_NO_CANCEL_OPTION);
 
             if (n == JOptionPane.YES_OPTION) {
                 SaveMapAction saveMapAction = new SaveMapAction(this.basePanel, false);
@@ -38,7 +40,9 @@ public class QuitAction implements ActionListener {
             }
         }
 
-        frame.dispose();
-        System.exit(0);
+        if(n != JOptionPane.CANCEL_OPTION) {
+            frame.dispose();
+            System.exit(0);
+        }
     }
 }
