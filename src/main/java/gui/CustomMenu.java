@@ -1,5 +1,6 @@
 package gui;
 
+import gui.actions.AboutAction;
 import gui.actions.menuActions.*;
 
 import javax.swing.*;
@@ -68,6 +69,7 @@ class CustomMenu extends JMenuBar {
 
         JMenuItem aboutItem = new JMenuItem("About");
         aboutItem.setMnemonic('a');
+        aboutItem.addActionListener(new AboutAction(basePanel));
 
         fileMenu.add(newFileItem);
         fileMenu.add(openFileItem);
