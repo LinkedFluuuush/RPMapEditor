@@ -74,7 +74,7 @@ public class MapPanel extends JPanel {
         g.setColor(original);
     }
 
-    private Tile getTileAt(int i, int j){
+    public Tile getTileAt(int i, int j){
         return this.getMap().getMapTiles().get(new Pair<>(i, j));
     }
 
@@ -89,16 +89,23 @@ public class MapPanel extends JPanel {
         Tile.TileType existingType = existingTile != null ? existingTile.getType() : EMPTY;
         Tile.TileOrientation existingOrientation = existingTile != null ? existingTile.getOrientation() : TOP;
 
+        Tile newTile;
+
         if(addingType.equals(EMPTY)){
-            this.getMap().setTile(x, y, new Tile(existingType, existingOrientation, !isRoom));
+            newTile = new Tile(existingType, existingOrientation, !isRoom);
         } else {
             if (existingType.equals(addingType)) {
-                this.getMap().setTile(x, y, new Tile(EMPTY, addingOrientation, isRoom));
+                newTile = new Tile(EMPTY, addingOrientation, isRoom);
             } else {
-                this.getMap().setTile(x, y, new Tile(addingType, addingOrientation, isRoom));
+                newTile = new Tile(addingType, addingOrientation, isRoom);
             }
         }
 
+        this.addTileAt(newTile, x, y);
+    }
+
+    public void addTileAt(Tile tile, int x, int y) {
+        this.getMap().setTile(x, y, tile);
         this.repaint();
     }
 }

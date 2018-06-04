@@ -1,9 +1,11 @@
 package gui.actions;
 
+import core.Tile;
 import core.util.Pair;
 import gui.BasePanel;
 import gui.MainFrame;
 import gui.MapPanel;
+import gui.util.MapAction;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -55,12 +57,17 @@ public class MapMouseListener implements MouseListener, MouseMotionListener {
         x = (int) Math.floor(e.getX() / 30);
         y = (int) Math.floor(e.getY() / 30);
 
+        BasePanel basePanel = (BasePanel) mapPanel.getParent();
+
         if(!positionList.contains(new Pair<>(x, y))) {
+            Tile tile = this.mapPanel.getTileAt(x, y);
+            basePanel.clearRedoAction();
+            basePanel.addUndoAction(new MapAction(tile, x, y));
+
             positionList.add(new Pair<>(x, y));
             this.mapPanel.addTileAt(x, y);
         }
 
-        BasePanel basePanel = (BasePanel) mapPanel.getParent();
         if(basePanel.isSaved()) {
             basePanel.setSaved(false);
             Container ctr = basePanel.getParent();

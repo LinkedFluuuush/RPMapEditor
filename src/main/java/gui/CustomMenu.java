@@ -8,7 +8,7 @@ import java.awt.event.KeyEvent;
 
 class CustomMenu extends JMenuBar {
 
-    public CustomMenu(BasePanel basePanel) {
+    CustomMenu(BasePanel basePanel) {
         super();
         //Building menu
         // Menu components
@@ -52,10 +52,12 @@ class CustomMenu extends JMenuBar {
         JMenuItem undoItem = new JMenuItem("Undo");
         undoItem.setMnemonic('u');
         undoItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK));
+        undoItem.addActionListener(new UndoRedoAction(basePanel, true));
 
         JMenuItem redoItem = new JMenuItem("Redo");
         redoItem.setMnemonic('r');
         redoItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_DOWN_MASK));
+        redoItem.addActionListener(new UndoRedoAction(basePanel, false));
 
         JMenu helpMenu = new JMenu("?");
         helpMenu.setMnemonic('?');
