@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Tile {
     private final TileType type;
     private final TileOrientation orientation;
-    private final boolean isRoom;
+    private final boolean room;
 
     public enum TileType{
         EMPTY,
@@ -25,10 +25,16 @@ public class Tile {
         RIGHT
     }
 
-    public Tile(TileType type, TileOrientation orientation, boolean isRoom) {
+    public Tile(TileType type, TileOrientation orientation, boolean room) {
         this.type = type;
         this.orientation = orientation;
-        this.isRoom = isRoom;
+        this.room = room;
+    }
+
+    public Tile(){
+        this.type = TileType.EMPTY;
+        this.orientation = TileOrientation.TOP;
+        this.room = false;
     }
 
     public TileType getType() {
@@ -40,7 +46,7 @@ public class Tile {
     }
 
     public boolean isRoom() {
-        return isRoom;
+        return room;
     }
 
     @Override
