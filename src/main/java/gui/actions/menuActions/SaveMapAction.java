@@ -66,6 +66,8 @@ public class SaveMapAction implements ActionListener {
                     return "RPMap - *.rpMap";
                 }
             });
+            fc.setSelectedFile(this.basePanel.getSavingFile());
+
 
             Container frame = basePanel.getParent();
             while(frame.getClass() != MainFrame.class){

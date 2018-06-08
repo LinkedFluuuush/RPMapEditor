@@ -46,6 +46,7 @@ public class OpenMapAction implements ActionListener {
                 return "RPMap - *.rpMap";
             }
         });
+        fc.setSelectedFile(this.basePanel.getSavingFile());
 
         Container ctr = basePanel.getParent();
         while (ctr.getClass() != MainFrame.class) {
