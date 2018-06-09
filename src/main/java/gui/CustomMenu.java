@@ -2,15 +2,24 @@ package gui;
 
 import gui.actions.AboutAction;
 import gui.actions.menuActions.*;
+import gui.painters.MapPainter;
+import org.reflections.Reflections;
 
 import javax.swing.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Set;
 
-class CustomMenu extends JMenuBar {
+public class CustomMenu extends JMenuBar {
+    private final BasePanel basePanel;
 
     CustomMenu(BasePanel basePanel) {
         super();
+
+        this.basePanel = basePanel;
+
         //Building menu
         // Menu components
         JMenu fileMenu = new JMenu("File");
@@ -82,6 +91,26 @@ class CustomMenu extends JMenuBar {
 
         editMenu.add(undoItem);
         editMenu.add(redoItem);
+        editMenu.addSeparator();
+
+        Reflections reflections = new Reflections();
+        Set<Class<? extends MapPainter>> classes = reflections.getSubTypesOf(MapPainter.class);
+        JMenuItem stylingItem;
+        String painterName;
+        Method m;
+
+        for(Class<? extends MapPainter> clazz : classes){
+            try {
+                m = clazz.getDeclaredMethod("getPainterName");
+                painterName = (String) m.invoke(null);
+            } catch (Exception e) {
+                painterName = clazz.getName();
+            }
+
+            stylingItem = new JMenuItem(painterName);
+            stylingItem.addActionListener(new ChangePainterAction(basePanel, clazz, editMenu));
+            editMenu.add(stylingItem);
+        }
 
         helpMenu.add(helpItem);
         helpMenu.add(aboutItem);
@@ -89,6 +118,39 @@ class CustomMenu extends JMenuBar {
         this.add(fileMenu);
         this.add(editMenu);
         this.add(helpMenu);
+    }
 
+    public void updateMenu(){
+        int menuSize = this.getMenuCount();
+
+        for(int i = 0 ; i < menuSize ; i++){
+            JMenu menu = this.getMenu(i);
+            if(menu != null) {
+                int subMenuSize = menu.getItemCount();
+                for (int j = 0; j < subMenuSize; j++) {
+                    JMenuItem item = menu.getItem(j);
+
+                    if (item != null){
+                        Class<? extends MapPainter> currentPainter = this.basePanel.getMapPanel().getPainter().getClass();
+                        Method m;
+                        String painterName;
+                        try {
+                            m = currentPainter.getDeclaredMethod("getPainterName");
+                            painterName = (String) m.invoke(null);
+                        } catch (Exception e){
+                            painterName = currentPainter.getName();
+                        }
+
+                        if(item.getText().equals(painterName)){
+                            item.setText(item.getText() + " \u2713");
+                        } else if(item.getText().endsWith(" \u2713")){
+                            item.setText(item.getText().substring(0, item.getText().length() - 2));
+                        }
+                    }
+                }
+            }
+        }
+
+        this.repaint();
     }
 }

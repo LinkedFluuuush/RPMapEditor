@@ -1,9 +1,10 @@
-package gui.painters;
+package gui.painters.realPainter;
 
 import core.RPMap;
 import core.Tile;
 import core.util.Pair;
 import gui.MapPanel;
+import gui.painters.MapPainter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +24,7 @@ public class DayLightMinimalistPainter extends MapPainter {
     private final HashMap<Pair<Integer>, List<Pair<Pair<Integer>>>> smallDirtMap;
 
     private int drawingOffsetX, drawingOffsetY;
+    private Color baseColor;
 
     public DayLightMinimalistPainter(RPMap map){
         super(map);
@@ -31,6 +33,7 @@ public class DayLightMinimalistPainter extends MapPainter {
         this.bigDirtMap = new HashMap<>();
         this.smallDirtMap = new HashMap<>();
         this.workingMode = true;
+        this.baseColor = UIManager.getColor ( "Panel.background" );
     }
 
 
@@ -373,12 +376,11 @@ public class DayLightMinimalistPainter extends MapPainter {
 
         Point2D center = new Point2D.Float((i*30) + 15, (j*30) + 15);
         float radius = 80;
-        float[] dist = {0.2f, 1.0f};
+        float[] dist = {0.1f, 0.5f};
 
-        Color baseColor = UIManager.getColor ( "Panel.background" );
-        Color transparent = new Color(baseColor.getRed(), baseColor.getGreen(), baseColor.getBlue(), 0);
+        Color transparent = new Color(this.baseColor.getRed(), this.baseColor.getGreen(), this.baseColor.getBlue(), 0);
 
-        Color[] colors = {baseColor, transparent};
+        Color[] colors = {this.baseColor, transparent};
         RadialGradientPaint p =
                 new RadialGradientPaint(center, radius, dist, colors);
 
@@ -648,9 +650,13 @@ public class DayLightMinimalistPainter extends MapPainter {
     @Override
     public void paintMap(RPMap map, int width, int height, int offsetX, int offsetY, boolean drawBackground, Graphics g){
         Color original = g.getColor();
-        g.setColor(UIManager.getColor ( "Panel.background" ));
+        g.setColor(this.baseColor);
         g.fillRect(0, 0, width, height);
         g.setColor(original);
         this.paintMap(map, width, height, offsetX, offsetY, g);
+    }
+
+    public static String getPainterName() {
+        return "Light Minimalist Theme";
     }
 }

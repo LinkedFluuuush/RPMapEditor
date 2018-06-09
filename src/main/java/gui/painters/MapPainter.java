@@ -8,13 +8,13 @@ import java.awt.*;
 @SuppressWarnings("unused")
 public abstract class MapPainter {
     private RPMap map;
-    boolean workingMode;
+    protected boolean workingMode;
 
-    MapPainter(RPMap map){
+    protected MapPainter(RPMap map){
         this.map = map;
     }
 
-    RPMap getMap(){
+    protected RPMap getMap(){
         return this.map;
     }
 
@@ -48,5 +48,9 @@ public abstract class MapPainter {
 
     public void setWorkingMode(boolean workingMode){
         this.workingMode = workingMode;
+    }
+
+    public static String getPainterName(){
+        return "Abstract MapPainter";
     }
 }
