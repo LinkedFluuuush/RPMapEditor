@@ -253,16 +253,23 @@ public class DayLightMinimalistPainter extends MapPainter {
         java.util.List<Pair<Pair<Integer>>> bigDirtList = new ArrayList<>();
         Random r = new Random();
 
+        Color[] grayShades = {
+                new Color(211,211,211),
+                Color.LIGHT_GRAY,
+                new Color(169,169,169),
+        };
+
         if(bigDirtMap.get(new Pair<>(i, j)) == null) {
             int nDirt = 5 + r.nextInt(10);
 
             for (int n = 0; n < nDirt; n++) {
-                int dirtSize = 4 + r.nextInt(16);
+                int dirtSize = 4 + r.nextInt(10);
                 int dirtXOffset = r.nextInt(40 - dirtSize) - 5;
                 int dirtYOffset = r.nextInt(40 - dirtSize) - 5;
+                int grayShade = r.nextInt(3);
 
                 bigDirtList.add(new Pair<>(new Pair<>(dirtXOffset, dirtYOffset),
-                        new Pair<>(dirtSize, dirtSize)));
+                        new Pair<>(dirtSize, grayShade)));
             }
             bigDirtMap.put(new Pair<>(i, j), bigDirtList);
         } else {
@@ -270,12 +277,12 @@ public class DayLightMinimalistPainter extends MapPainter {
         }
 
         for(Pair<Pair<Integer>> aBigDirt : bigDirtList){
-            g.setColor(Color.LIGHT_GRAY);
-            g.fillOval((i * 30) + aBigDirt.getP1().getP1(), (j * 30) + aBigDirt.getP1().getP2(),
-                    aBigDirt.getP2().getP1(), aBigDirt.getP2().getP2());
+            g.setColor(grayShades[aBigDirt.getP2().getP2()]);
+            g.fillRoundRect((i * 30) + aBigDirt.getP1().getP1(), (j * 30) + aBigDirt.getP1().getP2(),
+                    aBigDirt.getP2().getP1(), aBigDirt.getP2().getP1(), 5, 5);
             g.setColor(Color.GRAY);
-            g.drawOval((i * 30) + aBigDirt.getP1().getP1(), (j * 30) + aBigDirt.getP1().getP2(),
-                    aBigDirt.getP2().getP1(), aBigDirt.getP2().getP2());
+            g.drawRoundRect((i * 30) + aBigDirt.getP1().getP1(), (j * 30) + aBigDirt.getP1().getP2(),
+                    aBigDirt.getP2().getP1(), aBigDirt.getP2().getP1(), 5, 5);
         }
 
         g.setColor(original);
@@ -306,8 +313,8 @@ public class DayLightMinimalistPainter extends MapPainter {
 
         for (Pair<Pair<Integer>> aSmallDirt : smallDirtList){
             g2d.setPaint(new Color(100, 100, 100, 100));
-            g2d.fillOval((i * 30) + aSmallDirt.getP1().getP1(), (j * 30) + aSmallDirt.getP1().getP2(),
-                    aSmallDirt.getP2().getP1(), aSmallDirt.getP2().getP2());
+            g2d.fillRoundRect((i * 30) + aSmallDirt.getP1().getP1(), (j * 30) + aSmallDirt.getP1().getP2(),
+                    aSmallDirt.getP2().getP1(), aSmallDirt.getP2().getP2(), 5, 5);
         }
 
         g.setColor(original);
@@ -567,15 +574,6 @@ public class DayLightMinimalistPainter extends MapPainter {
 
         g.setColor(Color.LIGHT_GRAY);
 
-        //Dessin de la grille :
-        for(int i = 0; i < width; i += 30){
-            g.drawLine(i, 0, i, height);
-        }
-
-        for(int i = 0; i < height; i += 30){
-            g.drawLine(0, i, width, i);
-        }
-
         // BLUR
         for(int i = 0; i < Math.ceil(width / 30); i++) {
             for (int j = 0; j < Math.ceil(height / 30); j++) {
@@ -592,6 +590,15 @@ public class DayLightMinimalistPainter extends MapPainter {
                     }
                 }
             }
+        }
+
+        //Dessin de la grille :
+        for(int i = 0; i < width; i += 30){
+            g.drawLine(i, 0, i, height);
+        }
+
+        for(int i = 0; i < height; i += 30){
+            g.drawLine(0, i, width, i);
         }
 
         for(int i = 0; i < Math.ceil(width / 30); i++){
