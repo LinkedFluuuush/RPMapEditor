@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AboutAction implements ActionListener {
-    private BasePanel basePanel;
+    private final BasePanel basePanel;
 
     public AboutAction(BasePanel basePanel){
         this.basePanel = basePanel;

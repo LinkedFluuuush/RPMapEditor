@@ -15,8 +15,8 @@ public class BasePanel extends JLayeredPane {
 
     private File savingFile;
     private boolean saved;
-    private Stack<MapAction> undoActions;
-    private Stack<MapAction> redoActions;
+    private final Stack<MapAction> undoActions;
+    private final Stack<MapAction> redoActions;
 
     public File getSavingFile() {
         return savingFile;

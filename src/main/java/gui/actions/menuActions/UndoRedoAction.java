@@ -7,8 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class UndoRedoAction implements ActionListener {
-    private BasePanel basePanel;
-    private boolean undo;
+    private final BasePanel basePanel;
+    private final boolean undo;
 
     public UndoRedoAction(BasePanel basePanel, boolean undo){
         this.basePanel = basePanel;

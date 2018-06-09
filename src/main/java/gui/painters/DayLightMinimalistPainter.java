@@ -1,6 +1,5 @@
 package gui.painters;
 
-import com.sun.corba.se.impl.orbutil.graph.Graph;
 import core.RPMap;
 import core.Tile;
 import core.util.Pair;
