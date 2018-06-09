@@ -5,7 +5,6 @@ import gui.actions.menuActions.*;
 import gui.painters.MapPainter;
 import gui.painters.realPainter.DayLightMinimalistPainter;
 import gui.painters.realPainter.NightLightMinimalistPainter;
-import org.reflections.Reflections;
 
 import javax.swing.*;
 import java.awt.event.InputEvent;
@@ -13,7 +12,6 @@ import java.awt.event.KeyEvent;
 import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 public class CustomMenu extends JMenuBar {
     private final BasePanel basePanel;
