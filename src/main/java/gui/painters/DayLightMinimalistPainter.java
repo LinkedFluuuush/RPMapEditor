@@ -1,5 +1,6 @@
 package gui.painters;
 
+import com.sun.corba.se.impl.orbutil.graph.Graph;
 import core.RPMap;
 import core.Tile;
 import core.util.Pair;
@@ -7,6 +8,7 @@ import gui.MapPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +31,7 @@ public class DayLightMinimalistPainter extends MapPainter {
         this.treeMap = new HashMap<>();
         this.bigDirtMap = new HashMap<>();
         this.smallDirtMap = new HashMap<>();
+        this.workingMode = true;
     }
 
 
@@ -356,6 +359,40 @@ public class DayLightMinimalistPainter extends MapPainter {
         g.setColor(original);
     }
 
+    public void drawBlur(int i, int j, Graphics g) {
+        Color original = g.getColor();
+
+        Graphics2D g2d = (Graphics2D) g;
+        Paint oldPaint = g2d.getPaint();
+
+        Point2D center = new Point2D.Float((i*30) + 15, (j*30) + 15);
+        float radius = 80;
+        float[] dist = {0.2f, 1.0f};
+
+        Color baseColor = UIManager.getColor ( "Panel.background" );
+        Color transparent = new Color(baseColor.getRed(), baseColor.getGreen(), baseColor.getBlue(), 0);
+
+        Color[] colors = {baseColor, transparent};
+        RadialGradientPaint p =
+                new RadialGradientPaint(center, radius, dist, colors);
+
+        g2d.setPaint(p);
+        g2d.fillOval((i*30) - 28, (j*30) - 28, 86, 86);
+
+        if(this.workingMode) {
+            g2d.setColor(Color.BLACK);
+            g2d.drawLine((i * 30) + 11, (j * 30) + 10, (i * 30) + 20, (j * 30) + 19);
+            g2d.drawLine((i * 30) + 10, (j * 30) + 10, (i * 30) + 20, (j * 30) + 20);
+            g2d.drawLine((i * 30) + 10, (j * 30) + 11, (i * 30) + 19, (j * 30) + 20);
+
+            g2d.drawLine((i * 30) + 19, (j * 30) + 10, (i * 30) + 10, (j * 30) + 19);
+            g2d.drawLine((i * 30) + 20, (j * 30) + 10, (i * 30) + 10, (j * 30) + 20);
+            g2d.drawLine((i * 30) + 20, (j * 30) + 11, (i * 30) + 11, (j * 30) + 20);
+        }
+        g2d.setPaint(oldPaint);
+        g.setColor(original);
+    }
+
     public void drawOutsideTile(int i, int j, Graphics g) {
         Color original = g.getColor();
         Graphics2D g2d = (Graphics2D) g;
@@ -493,6 +530,10 @@ public class DayLightMinimalistPainter extends MapPainter {
 
     @Override
     public void paintMap(RPMap map, int width, int height, int offsetX, int offsetY, Graphics g) {
+        Graphics2D g2d = (Graphics2D) g ;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+
         g.setColor(Color.LIGHT_GRAY);
 
         this.drawingOffsetX = offsetX;
@@ -525,17 +566,41 @@ public class DayLightMinimalistPainter extends MapPainter {
             }
         }
 
+        g.setColor(Color.LIGHT_GRAY);
+
+        //Dessin de la grille :
+        for(int i = 0; i < width; i += 30){
+            g.drawLine(i, 0, i, height);
+        }
+
+        for(int i = 0; i < height; i += 30){
+            g.drawLine(0, i, width, i);
+        }
+
+        // BLUR
+        for(int i = 0; i < Math.ceil(width / 30); i++) {
+            for (int j = 0; j < Math.ceil(height / 30); j++) {
+                tile = this.getTileAt(i + this.drawingOffsetX, j + this.drawingOffsetY);
+
+                // Drawing below void
+                if (tile != null) {
+                    switch (tile.getType()) {
+                        case BLUR:
+                            this.drawBlur(i, j, g);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+
         for(int i = 0; i < Math.ceil(width / 30); i++){
             for(int j = 0; j < Math.ceil(height / 30); j++){
                 tile = this.getTileAt(i + this.drawingOffsetX, j + this.drawingOffsetY);
                 // Drawing above void
                 if(tile != null){
                     switch(tile.getType()){
-                        case BLUR:
-                            g.setColor(Color.BLACK);
-                            g.drawLine((i*30) + 5, (j*30) + 5, ((i+1)*30) - 5, ((j+1)*30) - 5);
-                            g.drawLine(((i+1)*30) - 5, (j*30) + 5, (i*30) + 5, ((j+1)*30) - 5);
-                            break;
                         case DOOR:
                             this.drawDoor(i, j, tile.getOrientation(), g);
                             break;
@@ -572,17 +637,6 @@ public class DayLightMinimalistPainter extends MapPainter {
                 }
             }
         }
-
-        g.setColor(Color.LIGHT_GRAY);
-
-        //Dessin de la grille :
-        for(int i = 0; i < width; i += 30){
-            g.drawLine(i, 0, i, height);
-        }
-
-        for(int i = 0; i < height; i += 30){
-            g.drawLine(0, i, width, i);
-        }
     }
 
     @Override
@@ -593,5 +647,4 @@ public class DayLightMinimalistPainter extends MapPainter {
         g.setColor(original);
         this.paintMap(map, width, height, offsetX, offsetY, g);
     }
-
 }

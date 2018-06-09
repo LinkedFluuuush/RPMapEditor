@@ -8,6 +8,7 @@ import java.awt.*;
 @SuppressWarnings("unused")
 public abstract class MapPainter {
     private RPMap map;
+    boolean workingMode;
 
     MapPainter(RPMap map){
         this.map = map;
@@ -35,6 +36,8 @@ public abstract class MapPainter {
 
     public abstract void drawWater(int i, int j, Graphics g);
 
+    public abstract void drawBlur(int i, int j, Graphics g);
+
     public abstract void drawOutsideTile(int i, int j, Graphics g);
 
     public abstract void paintMap(RPMap map, int width, int height, Graphics g);
@@ -42,4 +45,8 @@ public abstract class MapPainter {
     public abstract void paintMap(RPMap map, int width, int height, int offsetX, int offsetY, Graphics g);
 
     public abstract void paintMap(RPMap map, int width, int height, int offsetX, int offsetY, boolean drawBackground, Graphics g);
+
+    public void setWorkingMode(boolean workingMode){
+        this.workingMode = workingMode;
+    }
 }

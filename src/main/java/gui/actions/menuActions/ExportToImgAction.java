@@ -37,7 +37,7 @@ public class ExportToImgAction implements ActionListener {
         }
 
 
-        if(!mapSize.equals(new Pair<Integer>(0, 0))) {
+        if(!mapSize.equals(new Pair<>(0, 0))) {
             BufferedImage finalImage = new BufferedImage((mapSize.getP1() + 2) * 30, (mapSize.getP2() + 2) * 30,
                     BufferedImage.TYPE_INT_RGB);
 
@@ -46,8 +46,9 @@ public class ExportToImgAction implements ActionListener {
 
             MapPainter painter = basePanel.getMapPanel().getPainter();
 
+            painter.setWorkingMode(false);
             painter.paintMap(map, (mapSize.getP1() + 2) * 30, (mapSize.getP2() + 2) * 30, upLeftCorner.getP1() - 1, upLeftCorner.getP2() - 1, true, g);
-
+            painter.setWorkingMode(true);
 
             final JFileChooser fc = new JFileChooser() {
                 @Override
