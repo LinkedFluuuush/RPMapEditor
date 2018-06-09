@@ -1,6 +1,7 @@
 package gui;
 
-import gui.painters.DayLightMinimalistPainter;
+import gui.painters.realPainter.DayLightMinimalistPainter;
+import gui.painters.realPainter.NightLightMinimalistPainter;
 import gui.util.MapAction;
 
 import javax.swing.*;

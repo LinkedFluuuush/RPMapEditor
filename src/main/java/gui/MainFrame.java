@@ -13,16 +13,18 @@ public class MainFrame extends JFrame {
         new MainFrame("Untitled (*) - RP Map Editor");
     }
 
-    public MainFrame(String title) throws HeadlessException {
+    private MainFrame(String title) throws HeadlessException {
         super(title);
 
         final BasePanel basePanel = new BasePanel();
+        final CustomMenu customMenu = new CustomMenu(basePanel);
 
-        this.setJMenuBar(new CustomMenu(basePanel));
+        this.setJMenuBar(customMenu);
         this.setSize(new Dimension(800, 600));
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         this.getContentPane().add(basePanel);
+        customMenu.updateMenu();
 
         WindowListener exitListener = new WindowAdapter() {
 

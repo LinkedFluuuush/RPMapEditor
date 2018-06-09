@@ -4,7 +4,7 @@ import core.RPMap;
 import core.Tile;
 import core.util.Pair;
 import gui.actions.MapMouseListener;
-import gui.painters.DayLightMinimalistPainter;
+import gui.painters.realPainter.DayLightMinimalistPainter;
 import gui.painters.MapPainter;
 
 import javax.swing.*;
@@ -69,7 +69,7 @@ public class MapPanel extends JPanel {
 
         Color original = g.getColor();
 
-        this.painter.paintMap(map, this.getWidth(), this.getHeight(), g);
+        this.painter.paintMap(map, this.getWidth(), this.getHeight(), 0, 0, true, g);
 
         g.setColor(original);
     }
