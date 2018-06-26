@@ -73,8 +73,8 @@ public class MapMouseListener implements MouseListener, MouseMotionListener {
         if (this.currentButton == MouseEvent.BUTTON1) {
             int x, y;
 
-            x = (int) Math.floor(e.getX() / 30);
-            y = (int) Math.floor(e.getY() / 30);
+            x = (int) Math.floor(e.getX() / 30) + this.mapPanel.getOffsetX();
+            y = (int) Math.floor(e.getY() / 30) + this.mapPanel.getOffsetY();
 
             BasePanel basePanel = (BasePanel) mapPanel.getParent();
 
