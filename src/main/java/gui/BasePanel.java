@@ -56,7 +56,7 @@ public class BasePanel extends JLayeredPane {
 
     }
 
-    ToolPanel getToolPanel() {
+    public ToolPanel getToolPanel() {
         return toolPanel;
     }
 

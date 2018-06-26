@@ -5,6 +5,7 @@ import core.util.Pair;
 import gui.BasePanel;
 import gui.MainFrame;
 import gui.MapPanel;
+import gui.ToolPanel;
 import gui.util.MapAction;
 
 import java.awt.*;
@@ -17,11 +18,12 @@ import java.util.List;
 public class MapMouseListener implements MouseListener, MouseMotionListener {
     private final MapPanel mapPanel;
 
-    private final List<Pair<Integer>> positionList;
+    private int originX, originY;
+    private int currentButton;
+    private boolean adding;
 
     public MapMouseListener(MapPanel mapPanel) {
         this.mapPanel = mapPanel;
-        positionList = new ArrayList<>();
     }
 
     @Override
@@ -31,13 +33,29 @@ public class MapMouseListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        this.positionList.clear();
+        this.currentButton = e.getButton();
+        if(this.currentButton == MouseEvent.BUTTON1) {
+            int x = (int) Math.floor(e.getX() / 30);
+            int y = (int) Math.floor(e.getY() / 30);
+            Tile tile = this.mapPanel.getTileAt(x, y);
+
+            ToolPanel toolPanel = ((BasePanel)this.mapPanel.getParent()).getToolPanel();
+            Tile.TileType tileType = toolPanel.getSelectedTool();
+
+
+            adding = tile == null || (tileType.equals(Tile.TileType.EMPTY) && !tile.isRoom()) || !tileType.equals(tile.getType());
+        } else {
+            this.originX = (int) Math.floor(e.getX() / 30);
+            this.originY = (int) Math.floor(e.getY() / 30);
+
+        }
+
         this.mouseDragged(e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        this.currentButton = 0;
     }
 
     @Override
@@ -52,31 +70,44 @@ public class MapMouseListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        int x, y;
+        if (this.currentButton == MouseEvent.BUTTON1) {
+            int x, y;
 
-        x = (int) Math.floor(e.getX() / 30);
-        y = (int) Math.floor(e.getY() / 30);
+            x = (int) Math.floor(e.getX() / 30);
+            y = (int) Math.floor(e.getY() / 30);
 
-        BasePanel basePanel = (BasePanel) mapPanel.getParent();
+            BasePanel basePanel = (BasePanel) mapPanel.getParent();
 
-        if(!positionList.contains(new Pair<>(x, y))) {
             Tile tile = this.mapPanel.getTileAt(x, y);
             basePanel.clearRedoAction();
             basePanel.addUndoAction(new MapAction(tile, x, y));
 
-            positionList.add(new Pair<>(x, y));
-            this.mapPanel.addTileAt(x, y);
-        }
+            this.mapPanel.addTileAt(x, y, adding);
 
-        if(basePanel.isSaved()) {
-            basePanel.setSaved(false);
-            Container ctr = basePanel.getParent();
-            while (ctr.getClass() != MainFrame.class) {
-                ctr = ctr.getParent();
+            if (basePanel.isSaved()) {
+                basePanel.setSaved(false);
+                Container ctr = basePanel.getParent();
+                while (ctr.getClass() != MainFrame.class) {
+                    ctr = ctr.getParent();
+                }
+                MainFrame frame = (MainFrame) ctr;
+
+                frame.setTitle(basePanel.getSavingFile().getName().substring(0, basePanel.getSavingFile().getName().lastIndexOf('.')) + " (*) - RP Map Editor");
             }
-            MainFrame frame = (MainFrame) ctr;
+        } else {
+            int x, y;
 
-            frame.setTitle(basePanel.getSavingFile().getName().substring(0, basePanel.getSavingFile().getName().lastIndexOf('.')) + " (*) - RP Map Editor");
+            x = (int) Math.floor(e.getX() / 30);
+            y = (int) Math.floor(e.getY() / 30);
+
+            if(x != originX || y != originY) {
+                this.mapPanel.setOffsetX(this.mapPanel.getOffsetX() + (originX - x));
+                this.mapPanel.setOffsetY(this.mapPanel.getOffsetY() + (originY - y));
+                this.mapPanel.repaint();
+
+                originX = x;
+                originY = y;
+            }
         }
     }
 

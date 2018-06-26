@@ -18,6 +18,8 @@ public class MapPanel extends JPanel {
     private RPMap map;
     private MapPainter painter;
 
+    private int offsetX, offsetY;
+
     public enum Corner {
         TOPLEFT,
         TOPRIGHT,
@@ -37,6 +39,9 @@ public class MapPanel extends JPanel {
         }
 
         this.setBounds(0,0, 1,1);
+
+        this.setOffsetX(0);
+        this.setOffsetY(0);
 
         MapMouseListener mapMouseListener = new MapMouseListener(this);
 
@@ -69,7 +74,7 @@ public class MapPanel extends JPanel {
 
         Color original = g.getColor();
 
-        this.painter.paintMap(map, this.getWidth(), this.getHeight(), 0, 0, true, g);
+        this.painter.paintMap(map, this.getWidth(), this.getHeight(), this.getOffsetX(), this.getOffsetY(), true, g);
 
         g.setColor(original);
     }
@@ -78,7 +83,7 @@ public class MapPanel extends JPanel {
         return this.getMap().getMapTiles().get(new Pair<>(i, j));
     }
 
-    public void addTileAt(int x, int y){
+    public void addTileAt(int x, int y, boolean adding){
         ToolPanel toolPanel = ((BasePanel)this.getParent()).getToolPanel();
 
         Tile.TileType addingType = toolPanel.getSelectedTool();
@@ -92,12 +97,14 @@ public class MapPanel extends JPanel {
         Tile newTile;
 
         if(addingType.equals(EMPTY)){
-            newTile = new Tile(existingType, existingOrientation, !isRoom);
+            newTile = new Tile(existingType, existingOrientation, adding);
         } else {
-            if (existingType.equals(addingType)) {
+            if (existingType.equals(addingType) && !adding) {
                 newTile = new Tile(EMPTY, addingOrientation, isRoom);
-            } else {
+            } else if (adding) {
                 newTile = new Tile(addingType, addingOrientation, isRoom);
+            } else {
+                newTile = new Tile(existingType, existingOrientation, isRoom);
             }
         }
 
@@ -107,5 +114,21 @@ public class MapPanel extends JPanel {
     public void addTileAt(Tile tile, int x, int y) {
         this.getMap().setTile(x, y, tile);
         this.repaint();
+    }
+
+    public int getOffsetX() {
+        return offsetX;
+    }
+
+    public void setOffsetX(int offsetX) {
+        this.offsetX = offsetX;
+    }
+
+    public int getOffsetY() {
+        return offsetY;
+    }
+
+    public void setOffsetY(int offsetY) {
+        this.offsetY = offsetY;
     }
 }
