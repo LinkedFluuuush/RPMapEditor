@@ -34,20 +34,19 @@ public class MapMouseListener implements MouseListener, MouseMotionListener {
     @Override
     public void mousePressed(MouseEvent e) {
         this.currentButton = e.getButton();
-        if(this.currentButton == MouseEvent.BUTTON1) {
+
+        ToolPanel toolPanel = ((BasePanel)this.mapPanel.getParent()).getToolPanel();
+        Tile.TileType tileType = toolPanel.getSelectedTool();
+
+        if(this.currentButton == MouseEvent.BUTTON1 && !toolPanel.isMovePanel()) {
             int x = (int) Math.floor(e.getX() / 30);
             int y = (int) Math.floor(e.getY() / 30);
             Tile tile = this.mapPanel.getTileAt(x, y);
-
-            ToolPanel toolPanel = ((BasePanel)this.mapPanel.getParent()).getToolPanel();
-            Tile.TileType tileType = toolPanel.getSelectedTool();
-
 
             adding = tile == null || (tileType.equals(Tile.TileType.EMPTY) && !tile.isRoom()) || !tileType.equals(tile.getType());
         } else {
             this.originX = (int) Math.floor(e.getX() / 30);
             this.originY = (int) Math.floor(e.getY() / 30);
-
         }
 
         this.mouseDragged(e);
@@ -70,7 +69,8 @@ public class MapMouseListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        if (this.currentButton == MouseEvent.BUTTON1) {
+        ToolPanel toolPanel = ((BasePanel)this.mapPanel.getParent()).getToolPanel();
+        if (this.currentButton == MouseEvent.BUTTON1 && !toolPanel.isMovePanel()) {
             int x, y;
 
             x = (int) Math.floor(e.getX() / 30) + this.mapPanel.getOffsetX();

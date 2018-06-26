@@ -2,6 +2,7 @@ package gui;
 
 import core.Tile;
 import gui.actions.ChangeOrientationAction;
+import gui.actions.SelectMoveMapAction;
 import gui.actions.ToolDraggerMouseListener;
 import gui.actions.ToolSelectionAction;
 
@@ -11,12 +12,13 @@ import java.awt.*;
 public class ToolPanel extends JPanel {
     private Tile.TileType selectedTool;
     private Tile.TileOrientation toolOrientation;
+    private boolean movePanel;
 
     public ToolPanel() {
         this.setSelectedTool(Tile.TileType.EMPTY);
         this.setToolOrientation(Tile.TileOrientation.TOP);
 
-        this.setLayout(new GridLayout(13,1, 2, 2));
+        this.setLayout(new GridLayout(14,1, 2, 2));
 
         JButton roomButton = new JButton("Room / Walls");
         roomButton.setPreferredSize(new Dimension(120,20));
@@ -61,11 +63,16 @@ public class ToolPanel extends JPanel {
         orientationButton.setPreferredSize(new Dimension(50, 20));
         orientationButton.addActionListener(new ChangeOrientationAction(orientationButton, this));
 
+        JButton moveMapButton = new JButton("Scroll map");
+        moveMapButton.setPreferredSize(new Dimension(50, 20));
+        moveMapButton.addActionListener(new SelectMoveMapAction(this, moveMapButton));
+
         JLabel toolsLabel = new JLabel("Tools");
         toolsLabel.setHorizontalAlignment(SwingConstants.CENTER);
         toolsLabel.addMouseMotionListener(new ToolDraggerMouseListener(this));
 
         this.add(toolsLabel);
+        this.add(moveMapButton);
         this.add(roomButton);
         this.add(new JLabel("Objects"));
         this.add(doorButton);
@@ -78,6 +85,7 @@ public class ToolPanel extends JPanel {
         this.add(blurButton);
         this.add(new JLabel("Orientation"));
         this.add(orientationButton);
+
 
         this.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
         this.setBackground(Color.WHITE);
@@ -97,5 +105,13 @@ public class ToolPanel extends JPanel {
 
     public void setToolOrientation(Tile.TileOrientation toolOrientation) {
         this.toolOrientation = toolOrientation;
+    }
+
+    public boolean isMovePanel() {
+        return movePanel;
+    }
+
+    public void setMovePanel(boolean movePanel) {
+        this.movePanel = movePanel;
     }
 }

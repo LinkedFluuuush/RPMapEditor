@@ -39,7 +39,7 @@ public class BasePanel extends JLayeredPane {
         super();
         this.setLayout(null);
         this.toolPanel = new ToolPanel();
-        this.toolPanel.setBounds(20, 20, 120, 260);
+        this.toolPanel.setBounds(20, 20, 120, 300);
 
         this.mapPanel = new MapPanel(DayLightMinimalistPainter.class);
 

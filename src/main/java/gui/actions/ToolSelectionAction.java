@@ -22,6 +22,7 @@ public class ToolSelectionAction implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         toolPanel.setSelectedTool(this.typeSelection);
+        toolPanel.setMovePanel(false);
 
         for(Component c : this.toolPanel.getComponents()){
             if(!c.isEnabled()){
