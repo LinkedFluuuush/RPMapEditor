@@ -39,8 +39,8 @@ public class MapMouseListener implements MouseListener, MouseMotionListener {
         Tile.TileType tileType = toolPanel.getSelectedTool();
 
         if(this.currentButton == MouseEvent.BUTTON1 && !toolPanel.isMovePanel()) {
-            int x = (int) Math.floor(e.getX() / 30);
-            int y = (int) Math.floor(e.getY() / 30);
+            int x = (int) Math.floor(e.getX() / 30) + this.mapPanel.getOffsetX();
+            int y = (int) Math.floor(e.getY() / 30) + this.mapPanel.getOffsetY();
             Tile tile = this.mapPanel.getTileAt(x, y);
 
             adding = tile == null || (tileType.equals(Tile.TileType.EMPTY) && !tile.isRoom()) || !tileType.equals(tile.getType());
