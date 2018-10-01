@@ -75,6 +75,27 @@ public class CustomMenu extends JMenuBar {
         redoItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_DOWN_MASK));
         redoItem.addActionListener(new UndoRedoAction(basePanel, false));
 
+        JMenu toolsMenu = new JMenu("Tools");
+        toolsMenu.setMnemonic('t');
+
+        JMenuItem toggleBg = new JMenuItem("Display background image");
+        toggleBg.setMnemonic('d');
+        toggleBg.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_DOWN_MASK));
+        toggleBg.addActionListener(new DisplayBgImgAction(basePanel, toggleBg));
+        toggleBg.setEnabled(false);
+
+        JMenuItem resizeBgImgItem = new JMenuItem("Resize background image");
+        resizeBgImgItem.setMnemonic('r');
+        //undoItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK));
+        resizeBgImgItem.addActionListener(new ResizeBgImgAction(basePanel));
+
+        JMenuItem addBgImgItem = new JMenuItem("Add background image");
+        addBgImgItem.setMnemonic('a');
+        //undoItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK));
+        addBgImgItem.addActionListener(new AddBgImgAction(basePanel, toggleBg, resizeBgImgItem));
+
+
+
         JMenu helpMenu = new JMenu("?");
         helpMenu.setMnemonic('?');
 
@@ -116,11 +137,16 @@ public class CustomMenu extends JMenuBar {
             editMenu.add(stylingItem);
         }
 
+        toolsMenu.add(addBgImgItem);
+        toolsMenu.add(resizeBgImgItem);
+        toolsMenu.add(toggleBg);
+
         helpMenu.add(helpItem);
         helpMenu.add(aboutItem);
 
         this.add(fileMenu);
         this.add(editMenu);
+        this.add(toolsMenu);
         this.add(helpMenu);
     }
 
