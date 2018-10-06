@@ -1,10 +1,16 @@
-# RPMapEditor
+# RPMapEditor v0.4-beta.0
 
 This is a lightweight, java based map editor for tabletop RPGs and really anything that needs a simple map. This is aimed to be as simple and useful as possible, and useable on standard computers as well as on touchscreens.
 
+## Download the app
+
+To go and get started on drawing wonderful maps, please download our [latest release](https://github.com/LinkedFluuuush/RPMapEditor/releases/download/v0.4-beta.0/RpMapDesignerv0.4-beta.0.exe) !
+
+For older versions, go to our [release page](https://github.com/LinkedFluuuush/RPMapEditor/releases) !
+
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 
 ### Prerequisites
 
