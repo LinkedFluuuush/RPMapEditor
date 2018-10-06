@@ -41,6 +41,8 @@ public class AboutAction implements ActionListener {
 
         MainFrame frame = (MainFrame) ctr;
 
-        JOptionPane.showMessageDialog(frame,"RPMapEditor - Copyright LinkedFluuuush 2018");
+        JOptionPane.showMessageDialog(frame,"RPMapEditor - Copyright LinkedFluuuush 2018\n" +
+                "Under Apache v2.0 License\n" +
+                "Inspired from ANAMap - http://deepnight.net/tools/tabletop-rpg-map-editor/");
     }
 }
