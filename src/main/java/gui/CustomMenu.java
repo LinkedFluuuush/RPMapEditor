@@ -109,7 +109,10 @@ public class CustomMenu extends JMenuBar {
         //undoItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK));
         addBgImgItem.addActionListener(new AddBgImgAction(basePanel, toggleBg, resizeBgImgItem));
 
-
+        JMenuItem getMapSize = new JMenuItem("Get map size");
+        getMapSize.setMnemonic('s');
+        //undoItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK));
+        getMapSize.addActionListener(new GetMapSizeAction(basePanel));
 
         JMenu helpMenu = new JMenu("?");
         helpMenu.setMnemonic('?');
@@ -155,6 +158,7 @@ public class CustomMenu extends JMenuBar {
         toolsMenu.add(addBgImgItem);
         toolsMenu.add(resizeBgImgItem);
         toolsMenu.add(toggleBg);
+        toolsMenu.add(getMapSize);
 
         helpMenu.add(helpItem);
         helpMenu.add(aboutItem);

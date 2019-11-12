@@ -15,12 +15,6 @@
  */
 package gui.actions.menuActions;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import core.RPMap;
-import core.util.IntegerPairDeserializer;
-import core.util.Pair;
 import gui.BasePanel;
 import gui.MainFrame;
 
@@ -31,7 +25,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.ImageFilter;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
